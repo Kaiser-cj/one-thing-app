@@ -115,6 +115,7 @@ const [inputFocused, setInputFocused] = useState(false)
               >
                 Enter Project Title
               </label>
+              <div className="relative flex flex-col">
               <div className="relative">
                 <Input
                   id="plan-title"
@@ -143,6 +144,7 @@ onBlur={() => setInputFocused(false)}
     {isRefining ? "..." : "✦"}
   </span>
 </button>
+</div>
               </div>
               {refinedTask && (
   <div className="mt-3 p-3 rounded-xl border border-[#4a8c3f]/30 bg-[#4a8c3f]/10">
