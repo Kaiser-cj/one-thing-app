@@ -21,6 +21,8 @@ const motivationalQuotes = [
 export function CreatePlanSheet({ isOpen, onClose, onCreatePlan }: CreatePlanSheetProps) {
   const [title, setTitle] = useState("")
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0)
+  const [refinedTask, setRefinedTask] = useState("")
+const [isRefining, setIsRefining] = useState(false)
 
   useEffect(() => {
     if (!isOpen) return
@@ -37,6 +39,23 @@ export function CreatePlanSheet({ isOpen, onClose, onCreatePlan }: CreatePlanShe
       onCreatePlan(title.trim())
       setTitle("")
       onClose()
+    }
+  }
+  const handleClarify = async () => {
+    if (!title.trim()) return
+    setIsRefining(true)
+    try {
+      const res = await fetch("/api/clarify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ task: title }),
+      })
+      const data = await res.json()
+      setRefinedTask(data.refined)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setIsRefining(false)
     }
   }
 
@@ -107,17 +126,41 @@ export function CreatePlanSheet({ isOpen, onClose, onCreatePlan }: CreatePlanShe
                   style={{ height: "50px", backgroundColor: "rgba(224, 224, 224, 0.5)" }}
                 />
                 <button
-                  type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-[#4a8c3f] hover:text-[#3d7434] transition-colors"
-                  aria-label="AI refinement"
-                >
-                  <span style={{ fontSize: "18px", fontWeight: 600 }}>✦</span>
-                </button>
+  type="button"
+  onClick={handleClarify}
+  disabled={isRefining || !title.trim()}
+  className="absolute right-3 top-1/2 -translate-y-1/2 p-1"
+  aria-label="AI refinement"
+>
+  <span style={{ fontSize: "18px", fontWeight: 600 }}>
+    {isRefining ? "..." : "✦"}
+  </span>
+</button>
               </div>
+              {refinedTask && (
+  <div className="mt-3 p-3 rounded-xl border border-[#4a8c3f]/30 bg-[#4a8c3f]/10">
+    <p className="text-xs text-[#4a8c3f] font-medium mb-1">✦ Suggested</p>
+    <p className="text-sm text-foreground mb-2">{refinedTask}</p>
+    <div className="flex gap-2">
+      <button
+        onClick={() => { setTitle(refinedTask); setRefinedTask("") }}
+        className="text-xs px-3 py-1 rounded-full bg-[#4a8c3f] text-white"
+      >
+        Accept
+      </button>
+      <button
+        onClick={() => setRefinedTask("")}
+        className="text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground"
+      >
+        Dismiss
+      </button>
+    </div>
+  </div>
+)}
             </div>
 
             {/* Quote Card */}
-            <div className="mt-auto mb-6">
+            <div className="mt-auto mt-6">
               <div className="rounded-2xl p-6 w-full" style={{ backgroundColor: "#F0F7EE" }}>
                 <div className="text-center">
                   <p className="text-foreground text-base italic mb-3 transition-opacity duration-500">
