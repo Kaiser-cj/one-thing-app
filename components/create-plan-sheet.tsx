@@ -128,11 +128,6 @@ onBlur={() => setInputFocused(false)}
                   className="pr-12 text-base rounded-lg border border-transparent focus-visible:border-[#4a8c3f] focus-visible:ring-1 focus-visible:ring-[#4a8c3f]"
                   style={{ height: "50px", backgroundColor: "rgba(224, 224, 224, 0.5)" }}
                 />
-                {inputFocused && (
-  <p className="text-xs text-[#4a8c3f] mt-2">
-    ✦ Tap the star to refine with AI
-  </p>
-)}
                 <button
   type="button"
   onClick={handleClarify}
@@ -144,6 +139,12 @@ onBlur={() => setInputFocused(false)}
     {isRefining ? "..." : "✦"}
   </span>
 </button>
+                {inputFocused && (
+  <p className="text-xs text-[#4a8c3f] mt-2">
+    ✦ Tap the star to refine with AI
+  </p>
+)}
+                
 </div>
               </div>
               {refinedTask && (

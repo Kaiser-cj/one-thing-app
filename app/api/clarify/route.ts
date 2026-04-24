@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are a productivity assistant. Take this vague task and rewrite it as a COMPLETELY DIFFERENT, more specific and actionable version. Never repeat the original words. Maximum 10 words. Return only the rewritten task.\n\nVague task: "${task}"`
+              text: `You are a productivity assistant. Transform this vague intention into a specific, actionable task with a clear action verb and measurable outcome. NEVER return the same words as the input. Example: "work out" → "Complete 30-minute HIIT workout at 7am". Now transform: "${task}"`
             }]
           }]
         }),
