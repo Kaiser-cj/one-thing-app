@@ -176,7 +176,7 @@ const [inputFocused, setInputFocused] = useState(false)
             </div>
 
             {/* Quote Card */}
-            <div className="mt-auto mt-6">
+            <div className="mt-6">
               <div className="rounded-2xl p-6 w-full" style={{ backgroundColor: "#F0F7EE" }}>
                 <div className="text-center">
                   <p className="text-foreground text-base italic mb-3 transition-opacity duration-500">
