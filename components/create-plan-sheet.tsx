@@ -135,7 +135,8 @@ onBlur={() => setInputFocused(false)}
   style={{
     position: "absolute",
     right: "12px",
-    top: "25px",
+    top: "50%",
+    transform: "translateY(-50%)"
   }}
   aria-label="AI refinement"
 >
