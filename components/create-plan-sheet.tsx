@@ -107,52 +107,52 @@ const [inputFocused, setInputFocused] = useState(false)
           {/* Content */}
           <div className="flex-1 px-6 py-6 flex flex-col">
             {/* Input */}
-            <div className="mb-6">
-              <label
-                htmlFor="plan-title"
-                className="block text-foreground mb-2"
-                style={{ fontSize: "14px", fontWeight: 500 }}
-              >
-                Enter Project Title
-              </label>
-              <div className="relative flex flex-col">
-              <div className="relative">
-                <Input
-                  id="plan-title"
-                  type="text"
-                  placeholder="Enter title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  onFocus={() => setInputFocused(true)}
-onBlur={() => setInputFocused(false)}
-                  className="pr-12 text-base rounded-lg border border-transparent focus-visible:border-[#4a8c3f] focus-visible:ring-1 focus-visible:ring-[#4a8c3f]"
-                  style={{ height: "50px", backgroundColor: "rgba(224, 224, 224, 0.5)" }}
-                />
-                <button
-  type="button"
-  onClick={handleClarify}
-  disabled={isRefining || !title.trim()}
-  style={{
-    position: "absolute",
-    right: "12px",
-    top: "50%",
-    transform: "translateY(-50%)"
-  }}
-  aria-label="AI refinement"
->
+<div className="mb-6">
+  <label
+    htmlFor="plan-title"
+    className="block text-foreground mb-2"
+    style={{ fontSize: "14px", fontWeight: 500 }}
+  >
+    Enter Project Title
+  </label>
 
-  <span style={{ fontSize: "18px", fontWeight: 600 }}>
-    {isRefining ? "..." : "✦"}
-  </span>
-</button>
-                {inputFocused && (
-  <p className="text-xs text-[#4a8c3f] mt-2">
-    ✦ Tap the star to refine with AI
-  </p>
-)}
-                
+  <div className="relative">
+    <Input
+      id="plan-title"
+      type="text"
+      placeholder="Enter title"
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+      onFocus={() => setInputFocused(true)}
+      onBlur={() => setInputFocused(false)}
+      className="pr-12 text-base rounded-lg border border-transparent focus-visible:border-[#4a8c3f]"
+      style={{
+        height: "50px",
+        backgroundColor: "rgba(224, 224, 224, 0.5)"
+      }}
+    />
+
+    <button
+      type="button"
+      onClick={handleClarify}
+      disabled={isRefining || !title.trim()}
+      className="absolute right-3 top-1/2 -translate-y-1/2"
+      aria-label="AI refinement"
+    >
+      <span style={{ fontSize: "18px", fontWeight: 600 }}>
+        {isRefining ? "..." : "✨"}
+      </span>
+    </button>
+  </div>
+
+  {/* HELPER TEXT */}
+  {inputFocused && (
+    <p className="text-xs text-[#4a8c3f] mt-2">
+      ✦ Tap the star to refine with AI
+    </p>
+  )}
 </div>
-              </div>
+              
               {refinedTask && (
   <div className="mt-3 p-3 rounded-xl border border-[#4a8c3f]/30 bg-[#4a8c3f]/10">
     <p className="text-xs text-[#4a8c3f] font-medium mb-1">✦ Suggested</p>
@@ -219,10 +219,9 @@ onBlur={() => setInputFocused(false)}
               }}
             >
               Create Plan
-            </Button>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+              </Button>
+</div>
+</div>
+</>
+)
 }
