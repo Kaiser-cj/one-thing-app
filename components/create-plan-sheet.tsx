@@ -132,7 +132,7 @@ onBlur={() => setInputFocused(false)}
   type="button"
   onClick={handleClarify}
   disabled={isRefining || !title.trim()}
-  className="absolute right-3 top-1/2 -translate-y-1/2 p-1"
+  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 flex items-center justify-center"
   aria-label="AI refinement"
 >
   <span style={{ fontSize: "18px", fontWeight: 600 }}>
