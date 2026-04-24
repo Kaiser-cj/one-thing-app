@@ -105,7 +105,7 @@ const [inputFocused, setInputFocused] = useState(false)
           </div>
 
           {/* Content */}
-          <div className="flex-1 px-6 py-6 flex flex-col">
+          <div className="overflow-auto px-6 py-6 flex flex-col">
             {/* Input */}
 <div className="mb-6">
   <label
