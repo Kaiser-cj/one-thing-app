@@ -22,15 +22,14 @@ export function CreatePlanSheet({ isOpen, onClose, onCreatePlan }: CreatePlanShe
   const [title, setTitle] = useState("")
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0)
   const [refinedTask, setRefinedTask] = useState("")
-const [isRefining, setIsRefining] = useState(false)
-const [inputFocused, setInputFocused] = useState(false)
+  const [isRefining, setIsRefining] = useState(false)
+  const [inputFocused, setInputFocused] = useState(false)
+
   useEffect(() => {
     if (!isOpen) return
-    
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prev) => (prev + 1) % motivationalQuotes.length)
     }, 5000)
-    
     return () => clearInterval(interval)
   }, [isOpen])
 
@@ -41,6 +40,7 @@ const [inputFocused, setInputFocused] = useState(false)
       onClose()
     }
   }
+
   const handleClarify = async () => {
     if (!title.trim()) return
     setIsRefining(true)
@@ -63,7 +63,6 @@ const [inputFocused, setInputFocused] = useState(false)
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className={cn(
           "fixed inset-0 bg-black/50 z-[90] transition-opacity duration-300",
@@ -72,8 +71,6 @@ const [inputFocused, setInputFocused] = useState(false)
         onClick={onClose}
         aria-hidden="true"
       />
-      
-      {/* Sheet */}
       <div
         className={cn(
           "fixed left-0 right-0 bottom-0 bg-white z-[100] transition-transform duration-300 ease-out",
@@ -87,16 +84,12 @@ const [inputFocused, setInputFocused] = useState(false)
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4">
-            <h2
-              id="create-plan-title"
-              className="text-foreground"
-              style={{ fontSize: "16px", fontWeight: 500 }}
-            >
+            <h2 id="create-plan-title" className="text-foreground" style={{ fontSize: "16px", fontWeight: 500 }}>
               Create Plan
             </h2>
             <button
               onClick={onClose}
-              className="flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center justify-center rounded-full text-muted-foreground"
               style={{ width: "40px", height: "40px", backgroundColor: "#F2F2F2" }}
               aria-label="Close"
             >
@@ -105,101 +98,64 @@ const [inputFocused, setInputFocused] = useState(false)
           </div>
 
           {/* Content */}
-          <div className="px-6 py-6 flex flex-col">
+          <div className="flex-1 px-6 py-6 flex flex-col">
             {/* Input */}
-<div className="mb-6">
-  <label
-    htmlFor="plan-title"
-    className="block text-foreground mb-2"
-    style={{ fontSize: "14px", fontWeight: 500 }}
-  >
-    Enter Project Title
-  </label>
+            <div className="mb-6">
+              <label htmlFor="plan-title" className="block text-foreground mb-2" style={{ fontSize: "14px", fontWeight: 500 }}>
+                Enter Project Title
+              </label>
+              <div className="relative">
+                <Input
+                  id="plan-title"
+                  type="text"
+                  placeholder="Enter title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
+                  className="pr-12 text-base rounded-lg border border-transparent focus-visible:border-[#4a8c3f]"
+                  style={{ height: "50px", backgroundColor: "rgba(224, 224, 224, 0.5)" }}
+                />
+                <button
+                  type="button"
+                  onClick={handleClarify}
+                  disabled={isRefining || !title.trim()}
+                  style={{ position: "absolute", right: "12px", bottom: "13px" }}
+                  aria-label="AI refinement"
+                >
+                  <span style={{ fontSize: "18px", fontWeight: 600 }}>
+                    {isRefining ? "..." : "✦"}
+                  </span>
+                </button>
+              </div>
+              {inputFocused && (
+                <p className="text-xs text-[#4a8c3f] mt-2">✦ Tap the star to refine with AI</p>
+              )}
+            </div>
 
-  <div className="relative">
-    <Input
-      id="plan-title"
-      type="text"
-      placeholder="Enter title"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-      onFocus={() => setInputFocused(true)}
-      onBlur={() => setInputFocused(false)}
-      className="pr-12 text-base rounded-lg border border-transparent focus-visible:border-[#4a8c3f]"
-      style={{
-        height: "50px",
-        backgroundColor: "rgba(224, 224, 224, 0.5)"
-      }}
-    />
-
-    <button
-      type="button"
-      onClick={handleClarify}
-      disabled={isRefining || !title.trim()}
-      className="absolute right-3 top-1/2 -translate-y-1/2"
-      aria-label="AI refinement"
-    >
-      <span style={{ fontSize: "18px", fontWeight: 600 }}>
-        {isRefining ? "..." : "✨"}
-      </span>
-    </button>
-  </div>
-
-  {/* HELPER TEXT */}
-  {inputFocused && (
-    <p className="text-xs text-[#4a8c3f] mt-2">
-      ✦ Tap the star to refine with AI
-    </p>
-  )}
-</div>
-              
-              {refinedTask && (
-  <div className="mt-3 p-3 rounded-xl border border-[#4a8c3f]/30 bg-[#4a8c3f]/10">
-    <p className="text-xs text-[#4a8c3f] font-medium mb-1">✦ Suggested</p>
-    <p className="text-sm text-foreground mb-2">{refinedTask}</p>
-    <div className="flex gap-2">
-      <button
-        onClick={() => { setTitle(refinedTask); setRefinedTask("") }}
-        className="text-xs px-3 py-1 rounded-full bg-[#4a8c3f] text-white"
-      >
-        Accept
-      </button>
-      <button
-        onClick={() => setRefinedTask("")}
-        className="text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground"
-      >
-        Dismiss
-      </button>
-    </div>
-  </div>
-)}
-            
+            {/* Suggestion */}
+            {refinedTask && (
+              <div className="mb-6 p-3 rounded-xl border border-[#4a8c3f]/30 bg-[#4a8c3f]/10">
+                <p className="text-xs text-[#4a8c3f] font-um mb-1">✦ Suggested</p>
+                <p className="text-sm text-foreground mb-2">{refinedTask}</p>
+                <div className="flex gap-2">
+                  <button onClick={() => { setTitle(refinedTask); setRefinedTask("") }} className="text-xs px-3 py-1 rounded-full bg-[#4a8c3f] text-white">Accept</button>
+                  <button onClick={() => setRefinedTask("")} className="text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">Dismiss</button>
+                </div>
+              </div>
+            )}
 
             {/* Quote Card */}
-            <div className="mt-6">
+            <div className="mt-4">
               <div className="rounded-2xl p-6 w-full" style={{ backgroundColor: "#F0F7EE" }}>
                 <div className="text-center">
-                  <p className="text-foreground text-base italic mb-3 transition-opacity duration-500">
-                    &ldquo;{currentQuote.quote}&rdquo;
-                  </p>
-                  <p className="text-muted-foreground text-sm">
-                    — {currentQuote.author}
-                  </p>
+                  <p className="text-foreground text-base italic mb-3">&ldquo;{currentQuote.quote}&rdquo;</p>
+                  <p className="text-muted-foreground text-sm">— {currentQuote.author}</p>
                 </div>
-                {/* Quote indicators */}
-                <div className="flex justify-center gap-1.5 mt-4">
+                <div className="flex justify-center gap-1t-4">
                   {motivationalQuotes.map((_, index) => (
-                    <span
-                      key={index}
-                      className={cn(
-                        "h-1.5 rounded-full transition-all duration-300",
-                        index === currentQuoteIndex 
-                          ? "w-4 bg-[#4a8c3f]" 
-                          : "w-1.5 bg-muted-foreground/30"
-                      )}
-                    />
+                    <span key={index} className={cn("h-1.5 rounded-full transition-all duration-300", index === currentQuoteIndex ? "w-4 bg-[#4a8c3f]" : "w-1.5 bg-muted-foreground/30")} />
                   ))}
-                  </div>
                 </div>
               </div>
             </div>
@@ -211,18 +167,13 @@ const [inputFocused, setInputFocused] = useState(false)
               onClick={handleSubmit}
               disabled={!title.trim()}
               className="w-full bg-[#5F9B4C] hover:bg-[#568f45] text-white rounded-[15px] disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                height: "56px",
-                fontSize: "16px",
-                fontWeight: 500,
-                fontFamily:
-                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-              }}
+              style={{ height: "56px", fontSize: "16px", fontWeight: 500 }}
             >
               Create Plan
-              </Button>
-</div>
-</div>
-</>
-)
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
