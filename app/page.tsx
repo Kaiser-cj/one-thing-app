@@ -89,7 +89,7 @@ export default function OneThing() {
   const activeTaskForToday = activeTask && activeTask.date === getTodayKey() ? activeTask : null
 
   return (
-    <div className="min-h-screen bg-background max-w-[414px] mx-auto relative">
+    <div className="min-h-screen bg-background w-full max-w-[430px] mx-auto relative">
       {/* Main Content */}
       <main className="min-h-screen">
         {activeTab === "home" && (
