@@ -173,7 +173,7 @@ const [inputFocused, setInputFocused] = useState(false)
     </div>
   </div>
 )}
-            </div>
+            
 
             {/* Quote Card */}
             <div className="mt-6">
@@ -199,6 +199,7 @@ const [inputFocused, setInputFocused] = useState(false)
                       )}
                     />
                   ))}
+                  </div>
                 </div>
               </div>
             </div>
