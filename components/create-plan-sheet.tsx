@@ -146,7 +146,7 @@ export function CreatePlanSheet({ isOpen, onClose, onCreatePlan }: CreatePlanShe
             )}
 
             {/* Quote Card */}
-            <div className="mt-auto">
+            <div className="mt-auto mb-4">
               <div className="rounded-2xl p-6 w-full" style={{ backgroundColor: "#F0F7EE" }}>
                 <div className="text-center">
                   <p className="text-foreground text-base italic mb-3">&ldquo;{currentQuote.quote}&rdquo;</p>
