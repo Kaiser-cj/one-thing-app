@@ -16,8 +16,9 @@ function formatElapsed(seconds: number): string {
   const hours = Math.floor(seconds / 3600)
   const minutes = Math.floor((seconds % 3600) / 60)
   const remainingSeconds = seconds % 60
+
   return [hours, minutes, remainingSeconds]
-    .map((value) => String(value).padStart(2, "0"))
+    .map((v) => String(v).padStart(2, "0"))
     .join(":")
 }
 
@@ -36,177 +37,89 @@ export function HomeScreen({
       return
     }
 
-    const updateElapsed = () => {
-      setElapsedSeconds(Math.max(0, Math.floor((Date.now() - activeTaskStartedAt) / 1000)))
+    const update = () => {
+      setElapsedSeconds(
+        Math.max(0, Math.floor((Date.now() - activeTaskStartedAt) / 1000))
+      )
     }
 
-    updateElapsed()
-    const interval = setInterval(updateElapsed, 1000)
+    update()
+    const interval = setInterval(update, 1000)
     return () => clearInterval(interval)
   }, [activeTaskStartedAt])
 
   const hasActiveTask = Boolean(activeTaskTitle && activeTaskStartedAt)
 
   return (
-    <div className="flex flex-col items-center" style={{ height: 'calc(100vh - 120px)' }}>
+    <div className="min-h-screen flex flex-col items-center w-full px-4 bg-white">
       {hasActiveTask ? (
-        <div className="w-full flex flex-col items-center" style={{ paddingTop: "128px" }}>
-          <div
-            className="flex flex-col items-center"
-            style={{
-              width: "366px",
-              height: "478px",
-              padding: "24px",
-              backgroundColor: "#F8F8F8",
-              borderRadius: "20px",
-            }}
-          >
-            <div
-              className="flex items-center justify-center rounded-full"
-              style={{ width: "48px", height: "48px", backgroundColor: "rgba(95, 155, 76, 0.1)" }}
-            >
-              <BriefcaseBusiness style={{ width: "24px", height: "24px", color: "#5F9B4C" }} />
+        <div className="w-full flex flex-col items-center pt-24">
+          
+          {/* MAIN CARD */}
+          <div className="w-full max-w-md bg-[#F8F8F8] rounded-[20px] p-6 flex flex-col items-center">
+            
+            {/* ICON */}
+            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#5F9B4C]/10">
+              <BriefcaseBusiness className="w-6 h-6 text-[#5F9B4C]" />
             </div>
-            <p
-              className="text-foreground text-center"
-              style={{
-                marginTop: "16px",
-                fontSize: "24px",
-                fontWeight: 500,
-                lineHeight: "1.3",
-                fontFamily:
-                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-              }}
-            >
+
+            {/* TITLE */}
+            <p className="mt-4 text-[22px] font-medium text-center leading-tight">
               {activeTaskTitle}
             </p>
-            <div style={{ width: "318px", marginTop: "16px", borderTop: "1px dashed #D9D9D9" }} />
 
-            <div className="flex flex-col items-center" style={{ marginTop: "16px" }}>
-              <div className="flex items-center" style={{ gap: "8px" }}>
-                <Clock3 style={{ width: "18px", height: "18px", color: "#5F9B4C" }} />
-                <p
-                  style={{
-                    fontSize: "14px",
-                    color: "#AAAAAA",
-                    fontFamily:
-                      '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-                  }}
-                >
-                  Time Spent
-                </p>
+            {/* DIVIDER */}
+            <div className="w-full border-t border-dashed border-[#D9D9D9] my-4" />
+
+            {/* TIMER */}
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-2 text-[#AAAAAA] text-sm">
+                <Clock3 className="w-4 h-4 text-[#5F9B4C]" />
+                Time Spent
               </div>
-              <p
-                style={{
-                  marginTop: "8px",
-                  fontSize: "48px",
-                  fontWeight: 700,
-                  color: "#5F9B4C",
-                  fontFamily:
-                    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-                }}
-              >
+
+              <p className="mt-2 text-[44px] font-bold text-[#5F9B4C] tracking-tight">
                 {formatElapsed(elapsedSeconds)}
               </p>
             </div>
 
-            <div
-              className="flex items-center justify-center text-center"
-              style={{
-                width: "264px",
-                height: "38px",
-                marginTop: "16px",
-                padding: "10.5px 16px",
-                borderRadius: "10px",
-                backgroundColor: "rgba(95, 155, 76, 0.1)",
-                color: "#5F9B4C",
-                fontSize: "12px",
-                fontFamily:
-                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-              }}
-            >
+            {/* MOTIVATION */}
+            <div className="w-full mt-4 rounded-[10px] bg-[#5F9B4C]/10 text-[#5F9B4C] text-sm py-2 text-center">
               Stay focused! You&apos;ve got this 💪
             </div>
 
-            <div style={{ width: "318px", marginTop: "24px", borderTop: "1px dashed #D9D9D9" }} />
+            {/* DIVIDER */}
+            <div className="w-full border-t border-dashed border-[#D9D9D9] my-5" />
 
+            {/* BUTTONS */}
             <Button
               onClick={onMarkComplete}
-              className="text-white"
-              style={{
-                width: "318px",
-                height: "45px",
-                marginTop: "24px",
-                borderRadius: "10px",
-                backgroundColor: "#5F9B4C",
-                fontSize: "16px",
-                fontWeight: 500,
-                fontFamily:
-                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-              }}
+              className="w-full h-[45px] rounded-[10px] text-white text-[16px] font-medium"
+              style={{ backgroundColor: "#5F9B4C" }}
             >
               Mark as Completed
             </Button>
+
             <Button
               onClick={onGiveUp}
               variant="outline"
-              className="bg-transparent text-[#5F9B4C] hover:bg-transparent"
-              style={{
-                width: "318px",
-                height: "45px",
-                marginTop: "12px",
-                borderRadius: "10px",
-                border: "1px solid #5F9B4C",
-                fontSize: "16px",
-                fontWeight: 500,
-                fontFamily:
-                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-              }}
+              className="w-full h-[45px] mt-3 rounded-[10px] text-[#5F9B4C] border-[#5F9B4C] text-[16px] font-medium bg-transparent hover:bg-transparent"
             >
               Skip Task
             </Button>
           </div>
 
-          <div
-            className="flex items-center"
-            style={{
-              width: "366px",
-              height: "72px",
-              marginTop: "37px",
-              marginBottom: "85px",
-              borderRadius: "20px",
-              backgroundColor: "#F8F8F8",
-              padding: "16px",
-            }}
-          >
-            <div
-              className="flex items-center justify-center rounded-full"
-              style={{ width: "40px", height: "40px", backgroundColor: "rgba(95, 155, 76, 0.1)" }}
-            >
-              <div className="flex items-center" style={{ gap: "2px" }}>
-                <Sparkles style={{ width: "14px", height: "14px", color: "#5F9B4C" }} />
-                <Sparkles style={{ width: "14px", height: "14px", color: "#5F9B4C" }} />
-              </div>
+          {/* BOTTOM CARD */}
+          <div className="w-full max-w-md mt-8 mb-20 bg-[#F8F8F8] rounded-[20px] p-4 flex items-center">
+            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#5F9B4C]/10">
+              <Sparkles className="w-4 h-4 text-[#5F9B4C]" />
             </div>
-            <div style={{ marginLeft: "12px" }}>
-              <p
-                style={{
-                  fontSize: "16px",
-                  fontFamily:
-                    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-                }}
-              >
+
+            <div className="ml-3">
+              <p className="text-[15px]">
                 Small steps today, big wins tomorrow.
               </p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: 500,
-                  color: "#5F9B4C",
-                  fontFamily:
-                    '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
-                }}
-              >
+              <p className="text-sm font-medium text-[#5F9B4C]">
                 Keep showing up
               </p>
             </div>
@@ -214,27 +127,21 @@ export function HomeScreen({
         </div>
       ) : (
         <>
-          <h1
-            className="text-foreground text-center whitespace-nowrap"
-            style={{
-              marginTop: '54px',
-              fontSize: '16px',
-              fontWeight: 500,
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif'
-            }}
-          >
+          {/* HEADER */}
+          <h1 className="mt-16 text-[22px] sm:text-[26px] font-medium text-center leading-tight px-4">
             Any Plans for Today?
           </h1>
+
+          {/* CTA */}
           <div className="flex-1 flex items-center justify-center w-full">
-          <Button
-            onClick={onCreatePlan}
-            variant="outline"
-            className="bg-transparent hover:bg-muted text-foreground rounded-full text-base font-medium border border-border"
-            style={{ paddingLeft: '24px', paddingRight: '24px', paddingTop: '16px', paddingBottom: '16px' }}
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            Create Today&apos;s Plan
-          </Button>
+            <Button
+              onClick={onCreatePlan}
+              variant="outline"
+              className="flex items-center gap-2 px-6 py-4 rounded-full text-base font-medium border border-border bg-transparent hover:bg-muted"
+            >
+              <Plus className="w-5 h-5" />
+              Create Today&apos;s Plan
+            </Button>
           </div>
         </>
       )}
