@@ -128,7 +128,7 @@ export function HomeScreen({
       ) : (
         <>
           {/* HEADER */}
-          <h1 className="mt-16 text-[22px] sm:text-[26px] font-medium text-center leading-tight px-4">
+          <h1 className="mt-16 text-[16px] sm:text-[26px] font-medium text-center leading-tight px-4">
             Any Plans for Today?
           </h1>
 
